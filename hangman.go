@@ -129,7 +129,7 @@ func playHangman(numberOfLetters int) (playAgain bool, isWinner bool) {
 
 	fmt.Println()
 	for {
-		drawHangman(stageOfHangman)
+		drawHangman(stageOfHangman, guessedLetters)
 		if stageOfHangman == 10 {
 			fmt.Println("You lost the game")
 			fmt.Printf("You could have saved him with word: %s\n", strings.ToUpper(word))
@@ -207,7 +207,7 @@ func playHangman(numberOfLetters int) (playAgain bool, isWinner bool) {
 	}
 }
 
-func drawHangman(stageOfHangman int) {
+func drawHangman(stageOfHangman int, usedLetters string) {
 	switch stageOfHangman {
 	case 0:
 		fmt.Println("   +---+")
@@ -218,7 +218,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("       |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -231,7 +230,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("       |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -244,7 +242,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("       |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -257,7 +254,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("       |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -270,7 +266,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("       |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -283,7 +278,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("       |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -296,7 +290,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("       |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -309,7 +302,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("       |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -322,7 +314,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("  /    |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -335,7 +326,6 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("  / \\  |")
 		fmt.Println("       |")
 		fmt.Println("       |")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
 
@@ -348,10 +338,15 @@ func drawHangman(stageOfHangman int) {
 		fmt.Println("  / \\  |")
 		fmt.Println("       |")
 		fmt.Println(" R.I.P.|")
-		fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
 		fmt.Println()
 		break
+
+	default:
+		return
 	}
+
+	fmt.Printf(" ======== %v/10 Guesses\n", stageOfHangman)
+	fmt.Printf(" Used letter: %s\n", strings.ToUpper(usedLetters))
 }
 
 func wantToPlayAgain() bool {
