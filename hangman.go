@@ -8,24 +8,20 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
-	"time"
 )
 
-const MinLength = 4
-const MaxLength = 5
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
+const (
+	MinLengthEasy = 4
+	MaxLengthEasy = 6
+	MinLengthHard = 4
+	MaxLengthHard = 6
+)
 
 func main() {
 	wins := 0
 	loses := 0
 
-	numberOfLetters := 0
-
-	reInitRandomValue(&numberOfLetters)
-	again, hasWon := playHangman(numberOfLetters)
+	again, hasWon := playHangman()
 
 	for {
 		if hasWon {
@@ -37,8 +33,7 @@ func main() {
 		printScore(wins, loses)
 
 		if again {
-			reInitRandomValue(&numberOfLetters)
-			again, hasWon = playHangman(numberOfLetters)
+			again, hasWon = playHangman()
 		} else {
 			break
 		}
@@ -47,8 +42,8 @@ func main() {
 	fmt.Println("Bye...")
 }
 
-func reInitRandomValue(toInit *int) {
-	*toInit = rand.Intn(MaxLength-MinLength) + MinLength
+func reInitRandomValue(toInit *int, minLength int, maxLength int) {
+	*toInit = rand.Intn(maxLength-minLength+1) + minLength
 }
 
 func printScore(wins, loses int) {
@@ -70,10 +65,13 @@ func clearScreen() {
 	}
 }
 
-func chooseRandomWord(numberOfLetters int, gameType string) string {
+func chooseRandomWord(gameType string) string {
+	numberOfLetters := 5
 
 	if gameType == "e" {
-		numberOfLetters = min(numberOfLetters, 6)
+		reInitRandomValue(&numberOfLetters, MinLengthEasy, MaxLengthEasy)
+	} else if gameType == "h" {
+		reInitRandomValue(&numberOfLetters, MinLengthHard, MaxLengthHard)
 	}
 
 	var letterData []byte
@@ -94,14 +92,13 @@ func chooseRandomWord(numberOfLetters int, gameType string) string {
 	return chosenWord
 }
 
-func playHangman(numberOfLetters int) (playAgain bool, isWinner bool) {
+func playHangman() (playAgain bool, isWinner bool) {
 	stageOfHangman := 0
 	gameType := ""
 	hasGuessedALetter := false
 	hasWon := false
 	guess := ""
 	guessedLetters := ""
-	//again := false
 	dashes := ""
 	newDashes := ""
 
@@ -125,7 +122,7 @@ func playHangman(numberOfLetters int) (playAgain bool, isWinner bool) {
 		}
 	}
 
-	word := chooseRandomWord(numberOfLetters, gameType)
+	word := chooseRandomWord(gameType)
 
 	fmt.Println()
 	for {
