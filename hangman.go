@@ -111,7 +111,11 @@ func playHangman() (playAgain bool, isWinner bool) {
 		fmt.Println("Select game type:")
 		fmt.Println("[e] Easy - use simple worlds (4, 5, 6 letters)")
 		fmt.Println("[h] Hard - use more difficult words to 15 letters")
-		fmt.Scanln(&gameType)
+		_, err := fmt.Scanln(&gameType)
+		if err != nil {
+			fmt.Println("Something went wrong")
+			panic(err)
+		}
 		gameType = strings.ToLower(gameType)
 
 		if (gameType == "e") || (gameType == "h") {
@@ -140,7 +144,11 @@ func playHangman() (playAgain bool, isWinner bool) {
 			fmt.Printf(" %s\n", newDashes)
 		}
 		fmt.Printf("\nGuess the letter: ")
-		fmt.Scanln(&guess)
+		_, err := fmt.Scanln(&guess)
+		if err != nil {
+			fmt.Println("Something went wrong")
+			panic(err)
+		}
 
 		isALetter, err := regexp.MatchString("^[a-zA-Z]", guess)
 		if err != nil {
@@ -350,7 +358,11 @@ func wantToPlayAgain() bool {
 	for {
 		var again string
 		fmt.Println("Want to play again? [y/n]")
-		fmt.Scanln(&again)
+		_, err := fmt.Scanln(&again)
+		if err != nil {
+			fmt.Println("Something went wrong")
+			panic(err)
+		}
 		isMatch, err := regexp.MatchString("^Y|y|N|n", again)
 		if err != nil {
 			fmt.Println("Something went wrong")
